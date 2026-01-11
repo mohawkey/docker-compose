@@ -1,0 +1,13 @@
+services:
+  certimate:
+    image: certimate/certimate:latest
+    container_name: certimate
+    ports:
+      - 8090:8090
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - cdata:/app/pb_data
+    restart: unless-stopped
+volumes:
+  cdata:
