@@ -1,1 +1,18 @@
-lmlml
+services:
+  db:
+    image: postgres:18.3
+    container_name: postgresql
+    restart: unless-stopped
+    network_mode: bridge
+    environment:
+      POSTGRES_USER: '${USER}'
+      POSTGRES_PASSWORD: '${PASS}'
+      POSTGRES_DB: 'postgres'
+      TZ: Europe/Brussels
+    volumes:
+      - data:/var/lib/postgresql
+    ports:
+      - 5432:5432
+
+volumes:
+  data:
