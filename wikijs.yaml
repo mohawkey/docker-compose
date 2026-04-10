@@ -1,0 +1,36 @@
+# --------------------------------------------------------------------------------
+# PG_DB   => wiki
+# PG_USER =>
+# PG_PASS =>
+# --------------------------------------------------------------------------------
+services:
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${PG_DB}
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_USER: ${PG_USER}
+    logging:
+      driver: none
+    restart: unless-stopped
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  wiki:
+    image: ghcr.io/requarks/wiki:2
+    depends_on:
+      - db
+    environment:
+      DB_TYPE: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_USER: ${PG_USER}
+      DB_PASS: ${PG_PASS}
+      DB_NAME: ${PG_DB}
+    restart: unless-stopped
+    ports:
+      - 80:3000
+
+volumes:
+  db-data:
