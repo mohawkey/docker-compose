@@ -1,0 +1,23 @@
+# --------------------------------------------------------------------------------
+# 
+# --------------------------------------------------------------------------------
+
+services:
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
+    network_mode: bridge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Brussels
+    volumes:
+      - sabnzbd-config:/config
+      - /sabnzbd/complete:/config/Downloads/complete
+      - /sabnzbd/incomplete:/config/Downloads/incomplete
+    ports:
+      - 8090:8080
+    restart: unless-stopped
+
+volumes:
+  sabnzbd-config:
