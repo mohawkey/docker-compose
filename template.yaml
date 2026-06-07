@@ -1,0 +1,19 @@
+# --------------------------------------------------------------------------------
+# 
+# --------------------------------------------------------------------------------
+
+services:
+  <name>:
+    image: 
+    container_name: 
+    network_mode: bridge
+    restart: unless-stopped
+    environment:
+      PASSWORD: '${ROOTPASS}'
+    ports:
+      - 0000:0000
+    volumes:
+      - data:/data/data
+
+volumes:
+  data:
