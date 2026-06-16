@@ -1,18 +1,27 @@
 services:
+
+# ----------------------------------------------------------------------------------------------------
+#
+# ----------------------------------------------------------------------------------------------------
+
   adguardhome:
-    image: adguard/adguardhome:latest
     container_name: adguardhome
-    restart: unless-stopped
+    image: adguard/adguardhome:latest
     network_mode: host
+    restart: unless-stopped
     volumes:
       - home:/opt/adguardhome/work
       - config:/opt/adguardhome/conf
-  
+
+# ----------------------------------------------------------------------------------------------------
+#
+# ----------------------------------------------------------------------------------------------------
+
   nginx-proxy:
-    image: jc21/nginx-proxy-manager:latest
     container_name: nginx-proxy
-    restart: unless-stopped
+    image: jc21/nginx-proxy-manager:latest
     network_mode: bridge
+    restart: unless-stopped
     ports:
       - 80:80
       - 81:81
@@ -21,24 +30,31 @@ services:
       - data:/data
       - letsencrypt:/etc/letsencrypt
 
+# ----------------------------------------------------------------------------------------------------
+# SECRET_ENCRYPTION_KEY: openssl rand -hex 32
+# ----------------------------------------------------------------------------------------------------
   homarr:
     container_name: homarr
     image: ghcr.io/homarr-labs/homarr:latest
     network_mode: bridge
     restart: unless-stopped
+    environment:
+      - SECRET_ENCRYPTION_KEY= # 
+    ports:
+      - 7575:7575
     volumes:
       # - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
       - homarr_appdata:/appdata
-    environment:
-      - SECRET_ENCRYPTION_KEY= # KEY
-    ports:
-      - '7575:7575'
+      
+# ----------------------------------------------------------------------------------------------------
+#
+# ----------------------------------------------------------------------------------------------------
       
   vaultwarden:
-    image: vaultwarden/server:latest
     container_name: vaultwarden
-    restart: always
+    image: vaultwarden/server:latest
     network_mode: bridge
+    restart: unless-stopped
     environment:
       DOMAIN: "https://vault.home.io"
       ADMIN_TOKEN: # ""
@@ -46,8 +62,10 @@ services:
       - 1080:80
     volumes:
       - vaultwarden:/data
-
-
+      
+# ----------------------------------------------------------------------------------------------------
+#
+# ----------------------------------------------------------------------------------------------------
 
 volumes:
   data:
