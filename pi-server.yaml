@@ -1,0 +1,60 @@
+services:
+  adguardhome:
+    image: adguard/adguardhome:latest
+    container_name: adguardhome
+    restart: unless-stopped
+    network_mode: host
+    volumes:
+      - home:/opt/adguardhome/work
+      - config:/opt/adguardhome/conf
+  
+  nginx-proxy:
+    image: jc21/nginx-proxy-manager:latest
+    container_name: nginx-proxy
+    restart: unless-stopped
+    network_mode: bridge
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    volumes:
+      - data:/data
+      - letsencrypt:/etc/letsencrypt
+
+  homarr:
+    container_name: homarr
+    image: ghcr.io/homarr-labs/homarr:latest
+    network_mode: bridge
+    restart: unless-stopped
+    volumes:
+      # - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
+      - homarr_appdata:/appdata
+    environment:
+      - SECRET_ENCRYPTION_KEY=5cb527427827ccc791397b365baeac0c1848aac7b7a2c72f01bc588d8a896583
+    ports:
+      - '7575:7575'
+      
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: vaultwarden
+    restart: always
+    network_mode: bridge
+    environment:
+      DOMAIN: "https://vault.home.io"
+      ADMIN_TOKEN: "uDHef1AbkJcvjE0OVOCoVk+hVX0h8H399vGC4h47BlAGR8xw33Wsw=="
+    ports:
+      - 1080:80
+    volumes:
+      - vaultwarden:/data
+
+
+
+volumes:
+  data:
+  letsencrypt:
+  home:
+  config:
+  homarr_appdata:
+  vaultwarden:
+  
+  
