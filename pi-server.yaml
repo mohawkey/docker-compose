@@ -30,7 +30,7 @@ services:
       # - /var/run/docker.sock:/var/run/docker.sock # Optional, only if you want docker integration
       - homarr_appdata:/appdata
     environment:
-      - SECRET_ENCRYPTION_KEY=5cb527427827ccc791397b365baeac0c1848aac7b7a2c72f01bc588d8a896583
+      - SECRET_ENCRYPTION_KEY= # KEY
     ports:
       - '7575:7575'
       
@@ -41,7 +41,7 @@ services:
     network_mode: bridge
     environment:
       DOMAIN: "https://vault.home.io"
-      ADMIN_TOKEN: "uDHef1AbkJcvjE0OVOCoVk+hVX0h8H399vGC4h47BlAGR8xw33Wsw=="
+      ADMIN_TOKEN: # ""
     ports:
       - 1080:80
     volumes:
