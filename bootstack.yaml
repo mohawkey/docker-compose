@@ -18,9 +18,9 @@ services:
 
       - DB_HOST=mariadb
       - DB_PORT=3306
-      - DB_DATABASE=bookstack
-      - DB_USERNAME=bookstack
-      - DB_PASSWORD=bookstack8432
+      - DB_DATABASE=${DATABASE}
+      - DB_USERNAME=${USERNAME}
+      - DB_PASSWORD=${PASSWORD}
     volumes:
       - data:/config
     ports:
@@ -35,10 +35,10 @@ services:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Brussels
-      - MYSQL_ROOT_PASSWORD=mysupersecretrootpassword
-      - MYSQL_DATABASE=bookstack
-      - MYSQL_USER=bookstack
-      - MYSQL_PASSWORD=bookstack8432
+      - MYSQL_ROOT_PASSWORD=${ROOT_PASSWORD}
+      - MYSQL_DATABASE=${DATABASE}
+      - MYSQL_USER=${USERNAME}
+      - MYSQL_PASSWORD=${PASSWORD}
     volumes:
       - db_data:/config
 
