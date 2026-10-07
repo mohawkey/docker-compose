@@ -1,3 +1,4 @@
+~~~
 services:
   databasus:
     container_name: databasus
@@ -26,3 +27,4 @@ services:
 volumes:
   postgres-data:
   databasus-data:
+~~~
